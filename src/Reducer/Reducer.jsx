@@ -1,4 +1,10 @@
 
+/**
+ * Metodo que permite retornar un parametro de acuerdo a un evento que se ingresa como parametro
+ * @param {*} state 
+ * @param {*} action 
+ * @returns Parametro state de acuerdo al evento action.
+ */
 function Reducer(state, action) {
     switch (action.type) {
       case 'addItem':

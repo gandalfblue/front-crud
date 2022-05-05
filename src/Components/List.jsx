@@ -1,5 +1,10 @@
 import React, { useEffect } from 'react';
 
+/**
+ * Metodo que permite renderizar en el navegador la tabla de datos de la database
+ * @param {*} param0 
+ * @returns Una tabla organizada para ser renderizada en el navegador de los datos almacenados en la database
+ */
 const List = ({ dispatch, state, url }) => {
       
         useEffect(() => {
@@ -9,7 +14,7 @@ const List = ({ dispatch, state, url }) => {
             .then((list) => {
               dispatch({ type: "updateList", list })
             })
-        }, [state.list.length])
+        }, [dispatch, state.list.length, url])
       
         const onDelete = (id) =>{
           fetch(url + "/" +id+ "/todo", {

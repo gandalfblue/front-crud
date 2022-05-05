@@ -1,6 +1,11 @@
 
 import { useForm } from "react-hook-form";
 
+/**
+ * Metodo que permite renderizar en el navegador y capturar los datos del formulario
+ * @param {*} param0 
+ * @returns El formulario renderizado en el navegador
+ */
 const TodoForm = ({ dispatch, state: { item }, url }) => {
   
   const {

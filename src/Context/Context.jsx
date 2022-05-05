@@ -8,6 +8,9 @@ const initialState = {
   item: {}
 }
 
+/**
+ * Metodo que permite crear un contexto de los datos en la database y eventos del proyecto
+ */
 const Store = createContext(initialState);   
 
   const StoreProvider = ({ children }) => {
