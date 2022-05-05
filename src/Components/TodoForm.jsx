@@ -1,0 +1,91 @@
+
+import { useForm } from "react-hook-form";
+
+const TodoForm = ({ dispatch, state: { item }, url }) => {
+  
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    setValue,
+  } = useForm({ defaultValues: item });
+
+  setValue("name", item.name);
+
+  const onAdd = (data, event) => {
+    const request = {
+      name: data.name,
+      isCompleted: false,
+    };
+
+    event.target.reset();
+
+    fetch(url + "/todo", {
+      method: "POST",
+      body: JSON.stringify(request),
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((todo) => {
+        dispatch({ type: "addItem", item: todo });
+      });
+  };
+
+  const onEdit = (data) => {
+    const request = {
+      name: data.name,
+      id: item.id,
+      isCompleted: item.isCompleted,
+    };
+
+    fetch(url + "/todo", {
+      method: "PUT",
+      body: JSON.stringify(request),
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((todo) => {
+        dispatch({ type: "updateItem", item: todo });
+      });
+  };
+
+  return (
+    <>
+      {item.id ? (
+        <form onSubmit={handleSubmit(onEdit)}>
+          <input 
+            type="text"
+            name="name"
+            {...register('name', {
+              required : 'Required'
+            })}     
+          />
+          <div className="text-danger text-small d-block mb-2">
+            {errors?.name?.message}
+          </div>
+          <button type="submit">Actualizar</button>
+        </form>
+      ) : (
+        <form onSubmit={handleSubmit(onAdd)}>
+          <input type="text"
+            placeholder="Ingrese un todo"
+            name="name"
+            {...register('name', {
+              required : 'Required'
+            })}     
+          />
+          <div className="text-danger text-small d-block mb-2">
+            {errors?.name?.message}
+          </div>
+          <button type="submit">Agregar</button>
+        </form>
+      )}
+    </>
+  );
+};
+
+export { TodoForm };
